@@ -42,6 +42,20 @@ async function run() {
       const product = await productCollection.findOne(query);
       res.send(product);
     });
+    //posting one product
+    app.post("/product", async (req, res) => {
+      const product = req.body;
+      const result = await productCollection.insertOne(product);
+      res.send(result);
+    });
+
+    //deleting one product by id
+    app.delete("/product/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await productCollection.deleteOne(query);
+      res.send(result);
+    });
   } finally {
   }
 }
